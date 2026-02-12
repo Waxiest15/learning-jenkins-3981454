@@ -13,36 +13,29 @@ public class AppTest {
     private final PrintStream originalOut = System.out;
 
     @Test
-    public void testMainMethod() {
-        // Redirect System.out to capture the output
-        System.setOut(new PrintStream(outContent));
+public void testMainMethod() {
+    System.setOut(new PrintStream(outContent));
+    outContent.reset();
 
-        try {
-            // Call the main method
-            App.main(new String[]{});
-
-            // Verify the output
-            assertEquals("Hello World!\n", outContent.toString());
-        } finally {
-            // Restore System.out
-            System.setOut(originalOut);
-        }
+    try {
+        App.main(new String[]{});
+        assertEquals("Hello World!" + System.lineSeparator(), outContent.toString());
+    } finally {
+        System.setOut(originalOut);
     }
+}
 
-    @Test
-    public void testMainMethodWithArguments() {
-        // Redirect System.out to capture the output
-        System.setOut(new PrintStream(outContent));
+@Test
+public void testMainMethodWithArguments() {
+    System.setOut(new PrintStream(outContent));
+    outContent.reset();
 
-        try {
-            // Call the main method with arguments
-            App.main(new String[]{"arg1", "arg2"});
-
-            // Verify the output (should be the same regardless of arguments)
-            assertEquals("Hello World!\n", outContent.toString());
-        } finally {
-            // Restore System.out
-            System.setOut(originalOut);
-        }
+    try {
+        App.main(new String[]{"arg1", "arg2"});
+        assertEquals("Hello World!" + System.lineSeparator(), outContent.toString());
+    } finally {
+        System.setOut(originalOut);
     }
+}
+
 }
